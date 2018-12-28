@@ -1,0 +1,30 @@
+drop table user_table cascade constraints;
+drop table project_table cascade constraints;
+drop table issue_table cascade constraints;
+
+create table project_table(
+project_id varchar2(10) constraint pk_project_table PRIMARY KEY,
+project_name varchar2(50),
+manager_name varchar2(20)
+);
+
+create table user_table(
+user_id varchar2(50) constraint pk_user_table PRIMARY KEY ,
+password varchar2(50),
+user_name varchar2(50),
+project_id varchar2(10)  constraint fk_user_table references project_table(project_id),
+designation varchar2(50));
+
+create table issue_table(
+issue_id varchar2(10) constraint pk_issue_table PRIMARY key,
+issue_type VARCHAR2(20),
+description VARCHAR2(20),
+status VARCHAR2(20),
+priority VARCHAR2(20),
+project_id varchar2(10) constraint fk_issue_table_pro_id REFERENCES project_table(project_id),
+due_date date,
+date_of_creation date,
+reviewer_Id varchar2(50) constraint fk_issue_table_rev_id REFERENCES user_table(user_id)
+);
+
+commit;
